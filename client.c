@@ -14,7 +14,11 @@ int main() {
 
     // Teste criando uma soma:
     BigNumber* x = create_big_number("111");
-    BigNumber* y = create_big_number("10");
+    BigNumber* y = create_big_number("111");
+
+    int comparison_big_numbers = return_largest_big_number(x, y);
+    printf("A comparação entre os Big Numbers retornou: %d\n", comparison_big_numbers);
+
     BigNumber* sum = sum_big_numbers(x, y);
 
     print_big_number(sum);

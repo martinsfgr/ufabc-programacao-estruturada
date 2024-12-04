@@ -22,4 +22,6 @@ BigNumber* multiply_big_numbers(BigNumber *x, BigNumber *y);
 void print_big_number(BigNumber *x);
 void free_big_number(BigNumber *x);
 
+int return_largest_big_number(BigNumber *x, BigNumber *y);
+
 #endif
