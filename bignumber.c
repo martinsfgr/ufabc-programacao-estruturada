@@ -76,7 +76,7 @@ BigNumber* create_big_number(char *str_number) {
 */
 
 void print_big_number(BigNumber *big_number) {
-    if ((big_number->is_positive = 0)) printf("-");
+    if ((big_number->is_positive == 0)) printf("-");
 
     Node* current_node = big_number->first_digit;
 
@@ -131,7 +131,7 @@ void add_node_to_big_number(BigNumber *big_number, int digit) {
 
 
 /* 
-* @brief Verifica os tamanhos dos Big Numbers.
+* @brief Verifica os tamanhos entre dois Big Numbers.
 *
 * @param x Big Number a ser comparado.
 * @param y Big Number a ser comparado.
@@ -169,7 +169,7 @@ int compare_big_numbers_length(BigNumber *x, BigNumber *y) {
 
 /* 
 * @brief Função auxiliar para verificar, daqueles Big Numbers que possuem o mesmo tamanho, 
-*        qual é o maior.
+*        qual é o maior. A função compara apenas o módulo dos números, sem considerar o sinal.
 *
 * @param x Big Number a ser comparado.
 * @param y Big Number a ser comparado.
@@ -238,25 +238,39 @@ int return_largest_big_number(BigNumber *x, BigNumber *y) {
 BigNumber* sum_big_numbers(BigNumber *x, BigNumber *y) {
     BigNumber* result = create_big_number("");
 
-    Node* node_x = x->last_digit;
-    Node* node_y = y->last_digit;
+    if (x->is_positive != y->is_positive) {
+        printf("Vi aqui que os dois sinais estão trocados");
+    } 
+    
+    else {
+        if (x->is_positive == 0 && y->is_positive == 0) {
+            result->is_positive = 0;
+        } else {
+            result->is_positive = 1;
+        }
 
-    int carry_digit = 0;
+        Node* node_x = x->last_digit;
+        Node* node_y = y->last_digit;
 
-    while (node_x != NULL || node_y != NULL || carry_digit > 0) {
-        int digit_x, digit_y, sum, new_result_digit;
+        int carry_digit = 0;
 
-        digit_x = (node_x != NULL) ? node_x->digit : 0;
-        digit_y = (node_y != NULL) ? node_y->digit : 0;
+        while (node_x != NULL || node_y != NULL || carry_digit > 0) {
+            int digit_x, digit_y, sum, new_result_digit;
 
-        sum = digit_x + digit_y + carry_digit;
-        carry_digit = sum / 10;
-        new_result_digit = sum % 10;
+            digit_x = (node_x != NULL) ? node_x->digit : 0;
+            digit_y = (node_y != NULL) ? node_y->digit : 0;
 
-        add_node_to_big_number(result, new_result_digit);
-        
-        if (node_x != NULL) node_x = node_x->prev_digit;
-        if (node_y != NULL) node_y = node_y->prev_digit;
+            sum = digit_x + digit_y + carry_digit;
+            carry_digit = sum / 10;
+            new_result_digit = sum % 10;
+
+            add_node_to_big_number(result, new_result_digit);
+            
+            if (node_x != NULL) node_x = node_x->prev_digit;
+            if (node_y != NULL) node_y = node_y->prev_digit;
+        }
+
+        return result;
     }
 
     return result;
