@@ -3,8 +3,8 @@
 #include "bignumber.h"
 
 int main() {
-    BigNumber* x = create_big_number("-111");
-    BigNumber* y = create_big_number("-11");
+    BigNumber* x = create_big_number("-134");
+    BigNumber* y = create_big_number("-133");
 
     int comparison_big_numbers = return_largest_big_number(x, y);
     printf("A comparação entre os Big Numbers retornou: %d\n", comparison_big_numbers);

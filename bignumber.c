@@ -222,6 +222,27 @@ int return_largest_big_number(BigNumber *x, BigNumber *y) {
     return compare_big_numbers_with_same_length(x, y);
 }
 
+/* 
+* @brief Remove zeros da esquerda que permanecem no resultado depois de alguma operação
+*        com os Big Numbers.
+*
+* @param big_number Big Number a ter os zeros removidos da esquerda.
+*
+* @details A função passa por por todos os dígitos da esquerda que são iguais a zero,
+*          removendo ele do Nó e alterando qual será o novo primeiro Nó do Big Number.
+*          Se o Big Number for exatamente igual a zero, ele não exclui do Big Number.
+*/
+
+void remove_zeros_from_left(BigNumber *big_number) {
+    while (big_number->first_digit->digit == 0 && big_number->first_digit != big_number->last_digit) {
+        Node *node_to_remove = big_number->first_digit;
+
+        big_number->first_digit = node_to_remove->next_digit;
+        big_number->first_digit->prev_digit = NULL;
+
+        free(node_to_remove);
+    }
+}
 
 /* 
 * @brief Realiza a soma entre dois Big Numbers.
@@ -305,6 +326,8 @@ BigNumber* subtraction_big_numbers(BigNumber *x, BigNumber *y) {
         if (node_x != NULL) node_x = node_x->prev_digit;
         if (node_y != NULL) node_y = node_y->prev_digit;
     }
+
+    remove_zeros_from_left(result);
 
     return result;
 }
